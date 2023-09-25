@@ -1,0 +1,36 @@
+<%- include("partials/nav.ejs") %>
+<%- include("partials/header.ejs") %>
+
+
+<section>
+  <div class="heading">
+    <strong><%= type %> tasks.</strong>
+    <p><%= fulldate %></p>
+  </div>
+  <form action="/today" method="POST" class="text--field">
+    <input type="text" name="task" placeholder="New Item" required>
+    <input type="text" name="type" placeholder="New Item" value="<%= type %>" hidden>
+
+    <input type="submit">
+  </form>
+  <table>
+
+    <% lists.forEach(function (list, i) { %>
+    <td>
+      <form action="/<%= type %>/delete" method="post">
+        <input type="hidden" value="<%= list._id %>" name="id">
+        <input type="checkbox" class="cb<%= i %>" id="cb" onchange="this.form.submit()" <% if (list.isDone == true) { %> checked <%}%>>
+        <label for="<%= list[i] %>" id="cb<%= i %>"><%= list.task %></label>
+        <input type="hidden" name="task" placeholder="New Item" value="<%= list.task %>">
+      </form>
+    </td>
+    <%});%>
+
+
+  </table>
+
+  </div>
+</section>
+
+
+<%- include("partials/footer.ejs") %>
